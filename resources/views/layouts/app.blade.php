@@ -25,6 +25,10 @@
 
     @include('partials.header')
 
+    @auth
+      @include('partials.aside')
+    @endauth
+
     <main class="">
       @yield('content')
     </main>

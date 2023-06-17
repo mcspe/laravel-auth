@@ -16,6 +16,11 @@ body {
       header {
         height: 4rem;
       }
-    /* /NAV */
+     /* ASIDE */
+      aside {
+        float: left;
+        height: calc(100% - 4rem);
+        width: 15%;
+      }
   }
 }

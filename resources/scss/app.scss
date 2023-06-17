@@ -1,1 +1,21 @@
 @import '~bootstrap/scss/bootstrap';
+
+body {
+  /* GENERAL */
+    img {
+      max-height: 100%;
+      max-width: 100%;
+      object-fit: cover;
+    }
+  /* /GENERAL */
+
+  .ms-wrapper {
+    height: 100vh;
+    background: lightgray;
+    /* NAV */
+      header {
+        height: 4rem;
+      }
+    /* /NAV */
+  }
+}

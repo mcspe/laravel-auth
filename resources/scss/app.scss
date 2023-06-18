@@ -39,6 +39,44 @@ body {
             max-width: 20rem;
           }
         }
+
+        .ms-project-card {
+          position: relative;
+
+          .ms-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+            padding: 1rem;
+            border-left: 1px solid black;
+            border-bottom: 1px solid black;
+
+            .ms-tag {
+              font-weight: bold;
+            }
+
+            .ms-info {
+              color: blue;
+            }
+
+            img {
+              max-width: 30rem;
+              margin: 1rem;
+            }
+
+            button {
+              font-size: .7rem;
+            }
+
+          }
+
+          .ms-modify {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+          }
+        }
       }
   }
 }

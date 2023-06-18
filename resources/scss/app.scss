@@ -22,5 +22,23 @@ body {
         height: calc(100% - 4rem);
         width: 15%;
       }
+
+      main {
+        height: calc(100% - 4rem);
+        width: auto;
+        overflow: auto;
+
+        .ms-projects-container {
+          a {
+            display: block;
+            text-decoration: none;
+            border: 1px solid whitesmoke;
+          }
+
+          img {
+            max-width: 20rem;
+          }
+        }
+      }
   }
 }

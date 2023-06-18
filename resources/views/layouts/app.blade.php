@@ -23,13 +23,13 @@
 
   <div class="ms-wrapper">
 
-    @include('partials.header')
+    @include('admin.partials.header')
 
     @auth
-      @include('partials.aside')
+      @include('admin.partials.aside')
     @endauth
 
-    <main class="">
+    <main class="p-5">
       @yield('content')
     </main>
 

@@ -2,15 +2,16 @@
 
 @section('content')
 
-  <h2>Add a new Project</h2>
-  <form action="{{ route('admin.project.store') }}" method="POST" class="w-75 my-5 mx-auto px-5">
+  <h2 class="w-75 px-5 mx-auto">Add a new Project</h2>
+  <form action="{{ route('admin.project.store') }}" method="POST" class="w-75 my-5 mx-auto px-5" enctype="multipart/form-data">
+    @csrf
     <div class="mb-3">
       <label for="title" class="form-label">Insert the project title</label>
       <input type="text" class="form-control" id="title" name="title" value="{{ old('title') }}">
     </div>
     <div class="mb-3">
-      <label for="preview" class="form-label">Insert the project image path</label>
-      <input type="text" class="form-control" id="preview" name="preview" value="{{ old('preview') }}">
+      <label for="preview" class="form-label">Upload a project image</label>
+      <input type="file" class="form-control" id="preview" name="preview" value="{{ old('preview') }}">
     </div>
     <div class="mb-3">
       <label for="summary" class="form-label">Insert the project summary</label>

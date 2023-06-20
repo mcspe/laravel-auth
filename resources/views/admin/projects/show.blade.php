@@ -19,9 +19,11 @@
       </p>
     </div>
     <div class="ms-row">
+      {!! $project->summary !!}
       <p>
         <span class="ms-tag">Summary: </span>
-        <span class="ms-info">{{ $project->summary }}</span>
+        {!! $project->summary !!}
+        <p class="ms-info"></p>
       </p>
     </div>
     <div class="ms-row">
@@ -31,5 +33,6 @@
       </p>
     </div>
     <a href="{{ route('admin.project.edit', $project) }}" class="btn btn-primary ms-modify"><i class="fa-solid fa-pencil"></i></a>
+    @include('admin.partials.projectDelete')
   </div>
 @endsection

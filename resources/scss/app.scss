@@ -29,6 +29,10 @@ body {
         overflow: auto;
 
         .ms-projects-container {
+          .ms-card {
+            position: relative;
+          }
+
           a {
             display: block;
             text-decoration: none;
@@ -37,6 +41,18 @@ body {
 
           img {
             max-width: 20rem;
+          }
+
+          .ms-modify {
+            position: absolute;
+            top: 1rem;
+            right: 4rem;
+          }
+
+          .ms-project-delete {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
           }
         }
 
@@ -72,6 +88,12 @@ body {
           }
 
           .ms-modify {
+            position: absolute;
+            top: 1rem;
+            right: 4rem;
+          }
+
+          .ms-project-delete {
             position: absolute;
             top: 1rem;
             right: 1rem;

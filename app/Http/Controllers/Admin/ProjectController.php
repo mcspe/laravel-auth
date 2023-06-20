@@ -4,6 +4,8 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
+use App\Http\Requests\ProjectRequest;
 use App\Models\Project;
 
 class ProjectController extends Controller
@@ -27,7 +29,14 @@ class ProjectController extends Controller
      */
     public function create()
     {
-        return view('admin.projects.edit-create');
+      $project = null;
+      $title = 'Add a new Project';
+      $method = 'POST';
+      $route = route('admin.project.store');
+      $src = asset('storage/uploads/img-placeholder.png');
+
+
+      return view('admin.projects.edit-create', compact('project', 'title', 'method', 'route', 'src'));
     }
 
     /**
@@ -36,9 +45,21 @@ class ProjectController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(ProjectRequest $request)
     {
-        dump($request->all());
+        $form_data = $request->all();
+        $form_data['slug'] = Project::generateSlug($form_data['title']);
+
+        if (array_key_exists('preview', $form_data)) {
+          $form_data['original_image_path'] = $request->file('preview')->getClientOriginalName();
+          $form_data['image_path'] = Storage::put('uploads', $form_data['preview']);
+        }
+
+        $new_project = new Project();
+        $new_project->fill($form_data);
+        $new_project->save();
+
+        return redirect()->route('admin.project.show', $new_project);
     }
 
     /**
@@ -60,7 +81,12 @@ class ProjectController extends Controller
      */
     public function edit(Project $project)
     {
-        return view('admin.projects.edit');
+      $title = 'Edit ' . ucwords($project->title);
+      $method = 'PUT';
+      $route = route('admin.project.update', $project);
+      $src = asset('storage/' . $project->image_path);
+
+      return view('admin.projects.edit-create', compact('project', 'title', 'method', 'route', 'src'));
     }
 
     /**
@@ -70,9 +96,28 @@ class ProjectController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(ProjectRequest $request, Project $project)
     {
-        //
+        $form_data = $request->all();
+        if ($form_data['title'] != $project->title) {
+          $form_data['slug'] =  Project::generateSlug($form_data['title']);
+        } else {
+          $form_data['slug'] = $project->slug;
+        }
+
+        if (array_key_exists('preview', $form_data)) {
+
+          if($project->image_path) {
+            Storage::disk('public')->delete($project->image_path);
+          }
+
+          $form_data['original_image_path'] = $request->file('preview')->getClientOriginalName();
+          $form_data['image_path'] = Storage::put('uploads', $form_data['preview']);
+        }
+
+        $project->update($form_data);
+
+        return redirect()->route('admin.project.show', $project);
     }
 
     /**
@@ -81,8 +126,14 @@ class ProjectController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Project $project)
     {
-        //
+      if($project->image_path) {
+        Storage::disk('public')->delete($project->image_path);
+      }
+
+      $project->delete();
+
+      return redirect()->route('admin.project.index')->with('deleted', 'The project has been deleted');
     }
 }
